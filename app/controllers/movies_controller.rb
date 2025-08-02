@@ -37,10 +37,22 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+  def same
+    @movie = Movie.find(params[:id])
+    if @movie.director.blank?
+      #ERROR CODE: And I should see "'Alien' has no director info"  
+      flash[:info] = %Q{'#{@movie.title}' has no director info}
+      redirect_to movies_path
+    else
+      @movies = @movie.others_by_same_director
+    end
+  end
+
+
   private
 
   # Note - for Part 1, you may need to modify this method.
   def movie_params
-    params.require(:movie).permit(:title, :rating, :description, :release_date)
+    params.require(:movie).permit(:title, :rating, :description, :release_date, :director)
   end
 end

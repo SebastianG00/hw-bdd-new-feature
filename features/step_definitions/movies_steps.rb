@@ -22,3 +22,10 @@ Then(/I should see all the movies/) do
     step %(I should see "#{movie.title}")
   end
 end
+
+#ERROR CODE: You can implement step definitions for undefined steps with these snippets:
+
+Then(/^the director of "([^"]*)" should be "([^"]*)"$/) do |arg1, arg2|
+  expect(Movie.find_by(title: arg1).director).to eq(arg2)
+end
+

@@ -12,15 +12,27 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
+    
+    #ERROR Code: Can't find mapping from "the details page for "Alien"" to a path
+    when /^the details page for "(.*)"$/
+        movie_path(Movie.find_by(title: $1))
 
     when /^the (RottenPotatoes )?home\s?page$/ then '/movies'
 
     # Add more mappings here.
+    #The (.*) it looks for any text inside "" and Captures it
+    #Hint: mapping between the human-readable name of the page (e.g. the edit page for "Alien")
+    when /^the edit page for "(.*)"$/
+        #Thte captured text is stored in a variable defined as $1
+        edit_movie_path(Movie.find_by(title: $1))
     # Here is an example that pulls values out of the Regexp:
     #
     #   when /^(.*)'s profile page$/i
     #     user_profile_path(User.find_by_login($1))
-
+    
+    #ERROR CODE: Then I should be on the Similar Movies page for "Star Wars" 
+    when /^the Similar Movies page for "(.*)"$/
+        same_movie_path(Movie.find_by(title: $1))
     else
       begin
         page_name =~ /^the (.*) page$/
